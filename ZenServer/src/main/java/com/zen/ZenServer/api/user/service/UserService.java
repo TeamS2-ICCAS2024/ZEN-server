@@ -21,4 +21,10 @@ public class UserService {
                 .background_id(user.getBackground_id())
                 .build();
     }
+
+    public void changeBackground(Long backgroundId) {
+        User user = userRepository.findById(1L).get();
+        user.setBackground_id(backgroundId);
+        userRepository.save(user);
+    }
 }

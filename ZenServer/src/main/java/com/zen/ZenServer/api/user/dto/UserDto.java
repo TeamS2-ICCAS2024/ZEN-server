@@ -16,4 +16,11 @@ public class UserDto {
         private Long background_id;
     }
 
+    @Builder
+    @Data
+    @Schema(description = "정보")
+    public static class Result {
+        private String result;
+    }
+
 }

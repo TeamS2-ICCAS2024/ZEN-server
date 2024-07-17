@@ -24,4 +24,14 @@ public class UserController {
         UserDto.ProvideInfo info = userService.getUserInfo();
         return info;
     }
+
+    @GetMapping("/background")
+    @Operation(
+            summary = "배경을 변경합니다.",
+            description = "배경을 변경합니다."
+    )
+    public UserDto.Result changeBackground(Long background_id) {
+        userService.changeBackground(background_id);
+        return UserDto.Result.builder().result("success").build();
+    }
 }
