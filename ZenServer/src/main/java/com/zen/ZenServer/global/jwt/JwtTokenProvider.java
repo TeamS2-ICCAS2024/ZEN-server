@@ -104,7 +104,7 @@ public class JwtTokenProvider {
             throw new CustomException(ErrorCode.EMPTY_TOKEN);
         } else if (validToken.isEmpty()) {
             throw new CustomException(ErrorCode.INVALID_TOKEN);
-        } else if (validToken.get().isExpired) {
+        } else if (validToken.get().isExpired()) {
             throw new CustomException(ErrorCode.EXPIRED_TOKEN);
         }
     }

@@ -1,7 +1,6 @@
 package com.zen.ZenServer.global.auth.service;
 
 import com.zen.ZenServer.api.user.domain.User;
-import com.zen.ZenServer.api.user.dto.response.UserResponse;
 import com.zen.ZenServer.api.user.repository.UserRepository;
 import com.zen.ZenServer.global.auth.TokenType;
 import com.zen.ZenServer.global.auth.domain.Token;
@@ -12,12 +11,13 @@ import com.zen.ZenServer.global.auth.repository.TokenRepository;
 import com.zen.ZenServer.global.exception.CustomException;
 import com.zen.ZenServer.global.jwt.JwtTokenProvider;
 import com.zen.ZenServer.global.response.enums.ErrorCode;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

@@ -14,15 +14,15 @@ public class Token {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(unique = true)
-    public String token;
+    private String token;
 
-    public TokenType tokenType;
+    private TokenType tokenType;
 
-    public boolean isExpired;
+    private boolean isExpired;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    public User user;
+    private User user;
 }
