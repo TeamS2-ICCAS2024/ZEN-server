@@ -14,6 +14,15 @@ public enum ErrorCode {
     MISSING_REQUIRED_PARAMETER(40002, HttpStatus.BAD_REQUEST, "필수 파라미터가 누락되었습니다."),
 
     // 401 Unauthorized
+    UNAUTHORIZED_MEMBER(40101, HttpStatus.UNAUTHORIZED, "계정 정보가 존재하지 않습니다"),
+    WRONG_PASSWORD(40102, HttpStatus.UNAUTHORIZED, "비밀번호가 틀렸습니다"),
+    EXPIRED_TOKEN(40103, HttpStatus.UNAUTHORIZED, "만료된 토큰입니다"),
+    INVALID_TOKEN(40104, HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다"),
+    EMPTY_TOKEN(40105, HttpStatus.UNAUTHORIZED, "토큰이 비어있습니다." ),
+
+    // 403 FORBIDDEN
+    INVALID_AUTH_USER(40301, HttpStatus.FORBIDDEN, "권한 정보가 없는 사용자입니다"),
+    ACCESS_DENIED(40302,  HttpStatus.FORBIDDEN, "접근 권한이 없습니다"),
 
     // 404 Not Found
     NOT_FOUND_END_POINT(40400, HttpStatus.NOT_FOUND, "존재하지 않는 API입니다."),
@@ -21,6 +30,9 @@ public enum ErrorCode {
 
     // 405 Method Not Allowed Error
     METHOD_NOT_ALLOWED(40500, HttpStatus.METHOD_NOT_ALLOWED, "지원하지 않는 메소드입니다."),
+
+    // 409 Conflict
+    DUPLICATED_EMAIL_USER(40900, HttpStatus.CONFLICT, "존재하는 이메일입니다."),
 
     // 500 Internal Server Error
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다."),
