@@ -1,10 +1,8 @@
 package com.zen.ZenServer.api.user.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +15,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Table(name = "_user")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,6 +25,10 @@ public class User implements UserDetails {
     private String email;
 
     private String password;
+  
+    private Long leaf;
+
+    private Long background_id;
 
 
 
