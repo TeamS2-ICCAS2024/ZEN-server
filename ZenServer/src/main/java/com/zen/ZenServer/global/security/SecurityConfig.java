@@ -26,24 +26,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // csrf 설정 disable (토큰 사용)
-                .csrf(AbstractHttpConfigurer::disable)
+            // csrf 설정 disable (토큰 사용)
+            .csrf(AbstractHttpConfigurer::disable)
 
-                // 접근 주소별 권한 설정
-                .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/api/**").permitAll()
-                                .requestMatchers("/swagger-ui/**").permitAll()
-                                .requestMatchers("/v3/api-docs/**").permitAll()
-                                .anyRequest().authenticated()
-                )
+            // 접근 주소별 권한 설정
+            .authorizeHttpRequests((authorize) ->
+                    authorize.requestMatchers(
+                                    "/api/**",
+                                    "/swagger-ui/**"
+                            ).permitAll()
+                            .anyRequest().authenticated()
+            )
 
-                // STATELESS (session 사용 x)
-                .sessionManagement((session) ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+            // STATELESS (session 사용 x)
+            .sessionManagement((session) ->
+                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
 
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            .authenticationProvider(authenticationProvider)
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
