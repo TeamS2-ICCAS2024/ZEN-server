@@ -19,6 +19,7 @@ public class UserService {
                 .nickname(user.getNickname())
                 .leaf(user.getLeaf())
                 .background_id(user.getBackground_id())
+                .lastTestAt(user.getLastTestAt())
                 .build();
     }
 

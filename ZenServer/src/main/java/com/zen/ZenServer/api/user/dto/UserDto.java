@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class UserDto {
     @Builder
@@ -14,6 +16,7 @@ public class UserDto {
         private String nickname;
         private Long leaf;
         private Long background_id;
+        private LocalDateTime lastTestAt;
     }
 
     @Builder

@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
@@ -32,7 +33,8 @@ public class User implements UserDetails {
     @Setter
     private Long background_id;
 
-
+    @Setter
+    private LocalDateTime lastTestAt;
 
     //============================ UserDetail Method ============================//
 
