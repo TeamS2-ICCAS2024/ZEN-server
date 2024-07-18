@@ -28,6 +28,7 @@ public class User implements UserDetails {
   
     private Long leaf;
 
+    @Setter
     private Long background_id;
 
 
