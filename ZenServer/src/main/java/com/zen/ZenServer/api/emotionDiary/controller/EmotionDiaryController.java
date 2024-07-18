@@ -24,10 +24,7 @@ public class EmotionDiaryController {
         Long userId = 1L;
 
         String gptAnswer = gptService.getAnswer(request);
-        // 응답 데이터 자르기
-        if (gptAnswer.length() > 255) {
-            gptAnswer = gptAnswer.substring(0, 255);
-        }
+
         emotionDiaryService.postEmotionDiary(userId,request,gptAnswer);
         return ApiResponseDto.success(SuccessCode.EMOTIONDIARY_POST_SUCCESS);
     }
