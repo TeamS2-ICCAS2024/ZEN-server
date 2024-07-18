@@ -1,6 +1,8 @@
 package com.zen.ZenServer.global.client.gpt;
 
 import com.zen.ZenServer.api.emotionDiary.dto.EmotionDiaryPostRequest;
+import com.zen.ZenServer.global.exception.CustomException;
+import com.zen.ZenServer.global.response.enums.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -50,7 +52,7 @@ public class GptService {
         } catch (Exception e) {
             // 기타 예외 처리
             e.printStackTrace();
-            throw new RuntimeException("An error occurred while creating completion request", e);
+            throw new CustomException(ErrorCode.GPT_SERVER_ERROR);
         }
     }
 }
