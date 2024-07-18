@@ -32,7 +32,9 @@ public class SecurityConfig {
             // 접근 주소별 권한 설정
             .authorizeHttpRequests((authorize) ->
                     authorize.requestMatchers(
-                                    "/api/**").permitAll()
+                                    "/api/**",
+                                    "/swagger-ui/**"
+                            ).permitAll()
                             .anyRequest().authenticated()
             )
 
