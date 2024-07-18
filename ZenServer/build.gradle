@@ -49,6 +49,10 @@ dependencies {
 
 	//Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
+	//Gpt
+	implementation 'com.theokanning.openai-gpt3-java:client:0.10.0'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
 tasks.named('test') {
