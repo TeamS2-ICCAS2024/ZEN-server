@@ -27,4 +27,10 @@ public class UserService {
         user.setBackground_id(backgroundId);
         userRepository.save(user);
     }
+
+    public void addLeaf(Long leaf) {
+        User user = userRepository.findById(1L).get();
+        user.setLeaf(user.getLeaf() + leaf);
+        userRepository.save(user);
+    }
 }

@@ -31,6 +31,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        if (request.getServletPath().contains("/swagger-ui")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        if (request.getServletPath().contains("/v3/api-docs")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         String token = jwtTokenProvider.resolveToken(request);
         jwtTokenProvider.validToken(token);

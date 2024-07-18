@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    @GetMapping("/user")
+    @GetMapping("api/v1/user")
     @Operation(
             summary = "본인 정보 가져오기",
             description = "토큰을 기반으로 본인의 정보를 가져옵니다."
@@ -26,13 +26,21 @@ public class UserController {
         return info;
     }
 
-    @PostMapping("/background")
+    @PostMapping("api/v1/background")
     @Operation(
             summary = "배경을 변경합니다.",
             description = "배경을 변경합니다."
     )
-    public UserDto.Result changeBackground(Long background_id) {
+    public void changeBackground(Long background_id) {
         userService.changeBackground(background_id);
-        return UserDto.Result.builder().result("success").build();
+    }
+
+    @PostMapping("api/v1/leaf")
+    @Operation(
+            summary = "리프를 추가합니다..",
+            description = "리프를 추가합니다."
+    )
+    public void addLeaf(Long leaf) {
+        userService.addLeaf(leaf);
     }
 }
