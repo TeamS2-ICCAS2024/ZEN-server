@@ -25,7 +25,8 @@ public class User implements UserDetails {
     private String email;
 
     private String password;
-  
+
+    @Setter
     private Long leaf;
 
     @Setter
