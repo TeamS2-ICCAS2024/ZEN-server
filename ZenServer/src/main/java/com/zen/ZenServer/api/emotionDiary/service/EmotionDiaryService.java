@@ -2,7 +2,6 @@ package com.zen.ZenServer.api.emotionDiary.service;
 
 import com.zen.ZenServer.api.emotionDiary.domain.EmotionDiary;
 import com.zen.ZenServer.api.emotionDiary.dto.request.DiaryPostRequest;
-import com.zen.ZenServer.api.emotionDiary.dto.response.DiaryByEmotionResponse;
 import com.zen.ZenServer.api.emotionDiary.dto.response.DiaryDetailGetResponse;
 import com.zen.ZenServer.api.emotionDiary.dto.response.DiaryListGetResponse;
 import com.zen.ZenServer.api.emotionDiary.repository.EmotionDiaryRepository;

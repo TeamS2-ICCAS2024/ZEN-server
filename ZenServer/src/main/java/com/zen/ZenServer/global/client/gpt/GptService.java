@@ -49,14 +49,16 @@ public class GptService {
     public String getAnswer(String gptSummary, DiaryPostRequest request){
         String character = request.character();
 
-        if(character.equals("mozzi")){
-            gptSummary = gptSummary+MOZZI_ANSWER_PROMPT;
-        }
-        else if(character.equals("BAO")){
-            gptSummary = gptSummary+BAO_ANSWER_PROMPT;
-        }
-        else if(character.equals("sky")){
-            gptSummary = gptSummary+SKY_ANSWER_PROMPT;
+        switch (character.toLowerCase()) {
+            case "mozzi":
+                gptSummary += MOZZI_ANSWER_PROMPT;
+                break;
+            case "bao":
+                gptSummary += BAO_ANSWER_PROMPT;
+                break;
+            case "sky":
+                gptSummary += SKY_ANSWER_PROMPT;
+                break;
         }
 
         // GPT-3.5 Turbo API 호출
