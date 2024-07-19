@@ -1,13 +1,12 @@
 package com.zen.ZenServer.api.emotionDiary.service;
 
 import com.zen.ZenServer.api.emotionDiary.domain.EmotionDiary;
-import com.zen.ZenServer.api.emotionDiary.dto.request.EmotionDiaryPostRequest;
-import com.zen.ZenServer.api.emotionDiary.dto.response.EmotionDiaryDetailGetResponse;
-import com.zen.ZenServer.api.emotionDiary.dto.response.EmotionDiaryListGetResponse;
+import com.zen.ZenServer.api.emotionDiary.dto.request.DiaryPostRequest;
+import com.zen.ZenServer.api.emotionDiary.dto.response.DiaryByEmotionResponse;
+import com.zen.ZenServer.api.emotionDiary.dto.response.DiaryDetailGetResponse;
+import com.zen.ZenServer.api.emotionDiary.dto.response.DiaryListGetResponse;
 import com.zen.ZenServer.api.emotionDiary.repository.EmotionDiaryRepository;
 import com.zen.ZenServer.global.Util.DateUtil;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -23,7 +22,7 @@ public class EmotionDiaryService {
     private final EmotionDiaryRepository emotionDiaryRepository;
 
     @Transactional
-    public void postEmotionDiary(Long userId, EmotionDiaryPostRequest request, String gptSummary, String gptAnswer) {
+    public void postEmotionDiary(Long userId, DiaryPostRequest request, String gptSummary, String gptAnswer) {
 
         EmotionDiary emotionDiary = EmotionDiary.builder()
                 .userId(userId)
@@ -38,12 +37,12 @@ public class EmotionDiaryService {
     }
 
     @Transactional(readOnly = true)
-    public List<EmotionDiaryListGetResponse> getEmotionDiaryList(Long userId) {
+    public List<DiaryListGetResponse> getEmotionDiaryList(Long userId) {
         List<EmotionDiary> emotionDiaryList = emotionDiaryRepository.findByUserId(userId);
 
        return emotionDiaryList.stream()
                 .map(oneEmotionDiary ->
-                        EmotionDiaryListGetResponse.builder()
+                        DiaryListGetResponse.builder()
                         .character(oneEmotionDiary.getUserCharacter())
                         .date(DateUtil.refineDate(oneEmotionDiary.getCreatedAt()))
                         .emotionDiaryId(oneEmotionDiary.getId())
@@ -52,14 +51,22 @@ public class EmotionDiaryService {
     }
 
     @Transactional(readOnly = true)
-    public EmotionDiaryDetailGetResponse getEmotionDiaryDetail(Long emotionDiaryId){
+    public DiaryDetailGetResponse getEmotionDiaryDetail(Long emotionDiaryId){
         EmotionDiary emotionDiary = emotionDiaryRepository.findByIdOrThrow(emotionDiaryId);
 
-        return EmotionDiaryDetailGetResponse.builder()
+        return DiaryDetailGetResponse.builder()
                 .emotion(emotionDiary.getEmotionState())
                 .summary(emotionDiary.getGptSummary())
                 .solution(emotionDiary.getGptAnswer())
                 .when(DateUtil.refineDate(emotionDiary.getCreatedAt()))
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public List<String> getDiaryByEmotion(String emotion, Long userId){
+        List<EmotionDiary> emotionDiaryList = emotionDiaryRepository.findTop4ByEmotionStateAndUserId(emotion,userId);
+        return emotionDiaryList.stream().
+                map(oneEmotionDiary->DateUtil.refineDate(oneEmotionDiary.getCreatedAt()))
+                .toList();
     }
 }
