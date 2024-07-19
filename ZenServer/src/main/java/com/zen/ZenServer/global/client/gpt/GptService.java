@@ -1,7 +1,6 @@
 package com.zen.ZenServer.global.client.gpt;
 
-import com.zen.ZenServer.api.emotionDiary.domain.EmotionState;
-import com.zen.ZenServer.api.emotionDiary.dto.request.EmotionDiaryPostRequest;
+import com.zen.ZenServer.api.emotionDiary.dto.request.DiaryPostRequest;
 import com.zen.ZenServer.global.exception.CustomException;
 import com.zen.ZenServer.global.response.enums.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,7 @@ public class GptService {
     private static final String SKY_ANSWER_PROMPT = "Read this diary and reply coy in 230 characters. End with skysky.";
     private static final int MAX_GPT_ANSWER_LENGTH = 250; // 최대 글자 수
 
-    public String getSummary(EmotionDiaryPostRequest request) {
+    public String getSummary(DiaryPostRequest request) {
         String userInput = request.userInput() + ANSWER_PROMPT;
 
         // GPT-3.5 Turbo API 호출
@@ -47,7 +46,7 @@ public class GptService {
         return truncateToLastSentenceWithinMaxLength(gptAnswer);
     }
 
-    public String getAnswer(String gptSummary, EmotionDiaryPostRequest request){
+    public String getAnswer(String gptSummary, DiaryPostRequest request){
         String character = request.character();
 
         if(character.equals("mozzi")){
