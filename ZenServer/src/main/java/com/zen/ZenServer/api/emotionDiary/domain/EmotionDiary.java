@@ -26,7 +26,11 @@ public class EmotionDiary extends BaseTimeEntity {
 
     private String inputText;
 
+    private String gptSummary;
+
     private String gptAnswer;
 
     private String userCharacter;
+
+    private String emotionState;
 }

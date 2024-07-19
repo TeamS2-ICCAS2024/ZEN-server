@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String username);
 
-    default User findByIdByOrThrow(Long id) {
+    default User findByIdOrThrow(Long id) {
         return findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
     }

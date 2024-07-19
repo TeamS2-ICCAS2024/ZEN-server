@@ -18,7 +18,8 @@ public enum SuccessCode {
     TETRIS_GET_RESULT_SUCCESS(200, HttpStatus.OK, "테트리스 게임 결과 조회 성공"),
     TETRIS_GET_RESULT_LIST_SUCCESS(200, HttpStatus.OK, "테트리스 게임 결과 리스트 조회 성공"),
     EMOTIONDIARY_POST_SUCCESS(200,HttpStatus.OK,"사용자 답변 저장 성공"),
-    EMOTIONDIARY_LIST_GET_SUCCESS(200,HttpStatus.OK,"유저에 해당하는 일기 전체 조회 성공");
+    EMOTIONDIARY_LIST_GET_SUCCESS(200,HttpStatus.OK,"유저에 해당하는 일기 전체 조회 성공"),
+    EMOTIONDIARY_DETAIL_GET_SUCCESS(200, HttpStatus.OK,"일기 상세 조회 성공");
 
     private final int code;
     private final HttpStatus httpStatus;
