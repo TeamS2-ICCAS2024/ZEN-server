@@ -1,4 +1,4 @@
-package com.zen.ZenServer.api.emotionDiary.dto;
+package com.zen.ZenServer.api.emotionDiary.dto.request;
 
 public record EmotionDiaryPostRequest(
         String	userInput,      //	사용자 입력 답변 요약한 내용

@@ -1,6 +1,6 @@
 package com.zen.ZenServer.global.client.gpt;
 
-import com.zen.ZenServer.api.emotionDiary.dto.EmotionDiaryPostRequest;
+import com.zen.ZenServer.api.emotionDiary.dto.request.EmotionDiaryPostRequest;
 import com.zen.ZenServer.global.exception.CustomException;
 import com.zen.ZenServer.global.response.enums.ErrorCode;
 import lombok.RequiredArgsConstructor;
