@@ -2,9 +2,12 @@ package com.zen.ZenServer.api.emotionDiary.service;
 
 import com.zen.ZenServer.api.emotionDiary.domain.EmotionDiary;
 import com.zen.ZenServer.api.emotionDiary.dto.request.EmotionDiaryPostRequest;
+import com.zen.ZenServer.api.emotionDiary.dto.response.EmotionDiaryDetailGetResponse;
 import com.zen.ZenServer.api.emotionDiary.dto.response.EmotionDiaryListGetResponse;
 import com.zen.ZenServer.api.emotionDiary.repository.EmotionDiaryRepository;
 import com.zen.ZenServer.global.Util.DateUtil;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -20,13 +23,15 @@ public class EmotionDiaryService {
     private final EmotionDiaryRepository emotionDiaryRepository;
 
     @Transactional
-    public void postEmotionDiary(Long userId, EmotionDiaryPostRequest request, String gptAnswer) {
+    public void postEmotionDiary(Long userId, EmotionDiaryPostRequest request, String gptSummary, String gptAnswer) {
 
         EmotionDiary emotionDiary = EmotionDiary.builder()
                 .userId(userId)
                 .userCharacter(request.character())
                 .inputText(request.userInput())
+                .gptSummary(gptSummary)
                 .gptAnswer(gptAnswer)
+                .emotionState(request.emotionState())
                 .build();
 
         emotionDiaryRepository.save(emotionDiary);
@@ -44,5 +49,17 @@ public class EmotionDiaryService {
                         .emotionDiaryId(oneEmotionDiary.getId())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public EmotionDiaryDetailGetResponse getEmotionDiaryDetail(Long emotionDiaryId){
+        EmotionDiary emotionDiary = emotionDiaryRepository.findByIdOrThrow(emotionDiaryId);
+
+        return EmotionDiaryDetailGetResponse.builder()
+                .emotion(emotionDiary.getEmotionState())
+                .summary(emotionDiary.getGptSummary())
+                .solution(emotionDiary.getGptAnswer())
+                .when(DateUtil.refineDate(emotionDiary.getCreatedAt()))
+                .build();
     }
 }

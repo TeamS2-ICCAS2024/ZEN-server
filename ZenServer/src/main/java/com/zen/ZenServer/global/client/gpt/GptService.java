@@ -1,5 +1,6 @@
 package com.zen.ZenServer.global.client.gpt;
 
+import com.zen.ZenServer.api.emotionDiary.domain.EmotionState;
 import com.zen.ZenServer.api.emotionDiary.dto.request.EmotionDiaryPostRequest;
 import com.zen.ZenServer.global.exception.CustomException;
 import com.zen.ZenServer.global.response.enums.ErrorCode;
@@ -21,11 +22,14 @@ public class GptService {
     private final GptProperties gptProperties;
     private final WebClient webClient;
 
-    private static final String ADDITIONAL_PROMPT = " Based on this, we write a diary that gives feedback in 250-character perfectly constructed sentences.";
+    private static final String ANSWER_PROMPT = " Based on this, we write a diary that gives feedback in 250-character perfectly constructed sentences.";
+    private static final String MOZZI_ANSWER_PROMPT = "Read this diary and reply softly in 230 characters. End with zzi.";
+    private static final String BAO_ANSWER_PROMPT = "Read this diary and reply naughtyly in 230 characters. End with bao.";
+    private static final String SKY_ANSWER_PROMPT = "Read this diary and reply coy in 230 characters. End with skysky.";
     private static final int MAX_GPT_ANSWER_LENGTH = 250; // 최대 글자 수
 
-    public String getAnswer(EmotionDiaryPostRequest request) {
-        String userInput = request.userInput() + ADDITIONAL_PROMPT;
+    public String getSummary(EmotionDiaryPostRequest request) {
+        String userInput = request.userInput() + ANSWER_PROMPT;
 
         // GPT-3.5 Turbo API 호출
         GptRequest gptRequest = new GptRequest(
@@ -43,7 +47,37 @@ public class GptService {
         return truncateToLastSentenceWithinMaxLength(gptAnswer);
     }
 
-    public GptResponse createCompletion(GptRequest gptRequest) {
+    public String getAnswer(String gptSummary, EmotionDiaryPostRequest request){
+        String character = request.character();
+
+        if(character.equals("mozzi")){
+            gptSummary = gptSummary+MOZZI_ANSWER_PROMPT;
+        }
+        else if(character.equals("BAO")){
+            gptSummary = gptSummary+BAO_ANSWER_PROMPT;
+        }
+        else if(character.equals("sky")){
+            gptSummary = gptSummary+SKY_ANSWER_PROMPT;
+        }
+
+        // GPT-3.5 Turbo API 호출
+        GptRequest gptRequest = new GptRequest(
+                gptProperties.getModel(),
+                List.of(new Message(gptProperties.getRole(), gptSummary)),
+                gptProperties.getTemperature(),
+                gptProperties.getMaxToken(),
+                gptProperties.getStream()
+        );
+
+        GptResponse gptResponse = createCompletion(gptRequest);
+
+        String gptAnswer = gptResponse.choices().get(0).message().content().trim();
+        return truncateToLastSentenceWithinMaxLength(gptAnswer);
+    }
+
+
+
+    private GptResponse createCompletion(GptRequest gptRequest) {
         try {
             return webClient.post()
                     .uri(gptProperties.getUrl())
